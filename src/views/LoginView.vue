@@ -176,7 +176,7 @@ body {
     height: 600px;
     padding: 25px;
     background-color: #ecf0f3;
-    box-shadow: 10px 10px 10px #d1d9e6, -10px -10px 10px #f9f9f9;
+    // box-shadow: 10px 10px 10px #d1d9e6, -10px -10px 10px #f9f9f9;
     border-radius: 12px;
     overflow: hidden;
 }
@@ -347,7 +347,7 @@ body {
     height: 500px;
     border-radius: 50%;
     background-color: #ecf0f3;
-    box-shadow: inset 8px 8px 12px #b8bec7, inset -8px -8px 12px #fff;
+    box-shadow: inset 8px 8px 12px #b8bec7, inset -8px -8px 12px #c8c8c8;
     bottom: -60%;
     left: -60%;
     transition: 1.25s;

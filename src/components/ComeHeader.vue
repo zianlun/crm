@@ -107,7 +107,7 @@ export default {
 .nav-header {
     font-size: 25px;
     width: 100%;
-    height: 100vh;
+    height: auto;
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -132,7 +132,7 @@ export default {
 
 .el-menu {
     width: 100%;
-    background-image: url(../assets/img/header.png);
+    background-color: #EDE4E4;
 }
 
 .el-menu-item .el-button {
