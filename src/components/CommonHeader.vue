@@ -11,33 +11,41 @@
         </el-menu-item>
       </div>
       <div class='head-right'>
+        <el-menu-item >
+          <el-dropdown @command="handleCommand">
+            <span class="el-dropdown-link">
+              <el-avatar :size="40" :src="userInfo.avatar" style="margin-bottom: 10px;"></el-avatar>
+              {{ userInfo.username }}
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item command="a">个人中心</el-dropdown-item>
+              <el-dropdown-item command="b">信息查询</el-dropdown-item>
+              <el-dropdown-item command="loginOut">安全退出</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </el-menu-item>
         <el-menu-item v-for='(item, index) in menuData' :key='item.name' @click="clickMenu(item)" :index="`${index}`">
           <a>{{ item.label }}</a>
-        </el-menu-item>
-        <el-menu-item @click="loginOut">
-          <span>退出登录</span>
-        </el-menu-item>
-        <el-menu-item class='user'>
-          用户头像
         </el-menu-item>
       </div>
     </el-menu>
   </div>
 </template>
 <script>
+import { mapActions, mapState } from 'vuex';
 export default {
   data() {
     return {
       menuData: [
         {
-          label: '客户端下载',
-          name: 'client',
-          path: '/client',
+          label: '项目地址',
+          name: 'home',
+          path: '/home',
           icon: '',
           url: ''
         },
         {
-          label: '反馈',
+          label: '用户反馈',
           name: 'feedback',
           path: '/feedback',
           icon: '',
@@ -49,25 +57,25 @@ export default {
           path: '/trans',
           icon: '',
           url: ''
-        },
-        {
-          label: '首页',
-          name: 'home',
-          path: '/home',
-          icon: '',
-          url: ''
-        },
-        {
-          label: '个人中心',
-          name: 'user',
-          path: '/user',
-          icon: '',
-          url: ''
-        },
-      ]
+        }
+      ],
     };
   },
+  mounted(){
+    this.getUserInfo().then(() => {
+
+    })
+  },
+  computed:{
+    ...mapState('user',[
+        'userInfo'
+      ])
+  },
   methods: {
+    ...mapActions('user', [
+      'loginOut',
+      'getUserInfo'
+    ]),
     clickMenu(item) {
       if (item.path === '')
         return
@@ -75,21 +83,26 @@ export default {
         this.$router.push(item.path)
       }
     },
-    async loginOut() {
+    async handleLoginOut() {
       //退出登录
       //1、发送请求，通知服务器退出登录
       //2、清除项目中的数据token
       //3、跳转到登录页面
-      await this.$store.dispatch("user/loginOut")
-      this.$router.push("/login")
+      await this.loginOut()
+      this.$router.push("/index")
       this.$notify({
         title: '成功',
-        message: '退出登录成功！正在跳转到登录界面',
+        message: '退出登录成功！正在跳转到首页',
         type: 'success',
       })
       setTimeout(() => {
         this.$notify.closeAll()
       }, 1000)
+    },
+    async handleCommand(command){
+      if(command == "loginOut"){
+        await this.handleLoginOut()
+      }
     }
   },
 };
@@ -99,7 +112,6 @@ export default {
 .head {
   .el-menu-demo {
     width: 100%;
-    background-image: url(../assets/img/header.png);
     .head-left {
       float: left;
 
@@ -116,20 +128,21 @@ export default {
       }
 
       .el-menu-item {
+        font-size: 14px;
         float: left;
         padding-left: 5px;
         padding-right: 5px;
       }
 
       .name {
-        font-size: 23px;
+        font-size: 25px;
         font-weight: 900;
       }
     }
 
     .head-right {
       float: right;
-
+      margin-right: 40px;
       .el-menu-item {
         float: right;
         margin-left: 20px;

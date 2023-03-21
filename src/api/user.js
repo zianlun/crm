@@ -1,4 +1,29 @@
 import requests from "./request"
+
+
+export const reqLogin = (p) => {
+    return requests({
+        method:'get',
+        url:'/user/login',
+        params:p,
+        responseType:'json'
+    })
+}
+export const reqLoginOut = () => {
+    return requests({
+        method:'post',
+        url:'/user/loginOut'
+    })
+}
+//获取用户信息 get请求 参数为token
+// url : /getUserInfo
+export const reqUserInfo = () =>{
+    return requests({
+        method:'get',
+        url:'user/getInfo',
+    })
+}
+/*
 //注册请求 get 参数name, pwd
 export const reqRegister = (p) => {
     return requests({
@@ -27,15 +52,7 @@ export const reqLogin = (p) =>{
         responseType:'json'
     })
 }
-//获取用户信息 get请求 参数为token
-// url : /getUserInfo
-export const reqUserInfo = () =>{
-    return requests({
-        method:'post',
-        url:'/getUserInfo',
-        data:{}
-    })
-}
+
 //修改密码 put请求 /forgetPassword
 export const reqModifyPwd = (p) => {
     return requests({
@@ -54,3 +71,5 @@ export const reqLoginOut = () => {
         url:'/exit'
     })
 }
+
+*/

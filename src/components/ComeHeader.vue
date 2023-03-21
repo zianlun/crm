@@ -11,7 +11,9 @@
                     登录
                 </el-button>
             </el-menu-item>
-            <el-dialog style="visibility:hidden" :modal="false" :center="true" width="65%" top="4vh"
+            <el-dialog style="visibility:hidden" 
+                :close-on-click-modal="false"
+                :modal="false" :center="true" width="65%" top="4vh"
                 :modal-append-to-body="false" :visible.sync="dialogFormVisible">
                 <login-view style="visibility:visible" :close="handleDialog"></login-view>
                 <div slot="footer" class="dialog-footer"></div>
@@ -95,6 +97,10 @@ export default {
                 return 
             if(this.$route.path !== item.path){
                 this.$router.push(item.path)
+                console.log(this.$route.path)
+                if(this.$route.path == '/index')
+                    this.dialogFormVisible = true
+            
             }
         }
     }

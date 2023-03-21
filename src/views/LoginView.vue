@@ -1,8 +1,8 @@
 <template>
     <div class="shell">
-        <div class="container a-container" id="a-container">
+        <div class="container a-container" id="a-container" >
 
-            <form action="" method="" class="form" id="a-form">
+            <form class="form" id="a-form">
                 <i class="iconfont icon-cuowu" @click="handleClose"></i>
                 <h2 class="form_title title">创建账号</h2>
                 <div class="form_icons">
@@ -19,7 +19,7 @@
         </div>
 
         <div class="container b-container" id="b-container">
-            <form action="" method="" class="form" id="b-form">
+            <form @keyup.enter.prevent= "handleLogin" class="form" id="b-form">
                 <h2 class="form_title title">登入账号</h2>
                 <div class="form_icons">
                     <i class="iconfont icon-QQ"></i>
@@ -27,10 +27,10 @@
                     <i class="iconfont icon-bilibili-line"></i>
                 </div>
                 <span class="form_span">选择登录方式活电子邮箱登录</span>
-                <input type="text" class="form_input" placeholder="Email">
-                <input type="text" class="form_input" placeholder="Password">
-                <a class="form_link">忘记密码？</a>
-                <button class="form_button button submit">SIGN IN</button>
+                <input type="text" @focus="handleFocus" class="form_input" :class="emailStyle" :placeholder="Email" v-model="loginForm.email">
+                <input type="text" @focus="handleFocus" class="form_input" :class="passwordStyle" :placeholder="Password" v-model="loginForm.password" >
+                <a class="form_link" style="margin-top: 10px;" >忘记密码？</a>
+                <button class="form_button button submit" style="margin-top: 10px;" @click.prevent="handleLogin">SIGN IN</button>
             </form>
         </div>
 
@@ -53,7 +53,7 @@
 </template>
   
 <script>
-
+import { mapActions } from 'vuex'
 export default {
     data() {
         return {
@@ -61,6 +61,10 @@ export default {
                 email: "",
                 password: "",
             },
+            Email:'Email',
+            Password:'Password',
+            emailStyle:'',
+            passwordStyle:''
         };
     },
     props: {
@@ -69,6 +73,9 @@ export default {
         }
     },
     methods: {
+        ...mapActions('user',[
+            'login'
+        ]),
         handleChangeForm() {
             let switchCtn = document.querySelector("#switch-cnt");
             let switchC1 = document.querySelector("#switch-c1");
@@ -95,54 +102,53 @@ export default {
             bContainer.classList.toggle("is-txl");
             bContainer.classList.toggle("is-z");
         },
+        handleFocus(){
+            this.Email = 'Email',
+            this.Password = 'Password',
+            this.emailStyle = '',
+            this.passwordStyle = ''
+        },
         handleClose() {
             this.close()
         },
-        submitForm(formName) {
-            this.$refs[formName].validate((valid) => {
-                if (valid) {
-                    alert("submit!");
-                } else {
-                    console.log("error submit!!");
-                    return false;
+        async handleLogin(){ 
+            if(this.loginForm.email == ''){
+                this.emailStyle ='redStyle'
+                this.Email = "请输入正确的邮箱账号"
+                this.loginForm.password = ''
+                this.Password = 'Password'
+                this.passwordStyle = ''
+                return ;
+            }
+            if(this.loginForm.password == ''){
+                this.Password = "请输入账户密码"
+                this.passwordStyle = 'redStyle'
+                this.loginForm.password = ''
+                return ;
+            }
+            await this.login(this.loginForm).then( (response) => {
+                if(response.code == '0'){
+                    if(response.message == '账户密码错误'){
+                        this.Password = response.message
+                        this.passwordStyle = 'redStyle'
+                        this.loginForm.password = ''
+                    }else{
+                        this.emailStyle ='redStyle'
+                        this.Email = response.message 
+                        this.loginForm.email = ''
+                        this.loginForm.password = ''
+                        this.Password = 'Password'
+                        this.passwordStyle =''
+                    }
+                }else{
+                    
+                    this.$router.push("/home") 
                 }
-            });
-        },
-        resetForm(formName) {
-            this.$refs[formName].resetFields();
-        },
-        removeDomain(item) {
-            var index = this.dynamicValidateForm.domains.indexOf(item);
-            if (index !== -1) {
-                this.dynamicValidateForm.domains.splice(index, 1);
-            }
-        },
-        addDomain() {
-            this.dynamicValidateForm.domains.push({
-                value: "",
-                key: Date.now(),
-            });
-        },
-        async handleUserLogin() {
-            try {
-                //发起请求
-                await this.$store.dispatch("user/login", this.loginForm);
-                //保存token 跳转主页面
-                this.$notify({
-                    title: "成功",
-                    message: "登录成功！正在跳转到主界面",
-                    type: "success",
-                });
-                // this.$store.state.user.isLogin = true;
-                //跳转主界面
-                this.$router.push("/home");
-                setTimeout(() => {
-                    this.$notify.closeAll();
-                }, 1000);
-            } catch (error) {
-                console.log(error);
-            }
-        },
+            }).catch(error => {
+                console.log(error)
+            })
+        }
+
     },
 };
 </script>
@@ -155,6 +161,10 @@ export default {
     box-sizing: border-box;
     /* 字体无法选中 */
     user-select: none;
+}
+
+.redStyle::placeholder{
+    color: red;
 }
 
 body {

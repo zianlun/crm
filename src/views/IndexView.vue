@@ -26,7 +26,7 @@
         </div>
         <!-- 设置二维码 -->
         <div class="f">
-
+          <img :src="imgUrl" width="250px" height="250px">
         </div>
       </div>
     </div>
@@ -37,10 +37,25 @@
 // 引入particles.json文件用于配置canvas
 import particlesJson from '../assets/js/particles.json'
 export default {
+  name:'IndexView',
+  data(){
+    return {
+      imgUrl:'',
+    }
+  },
   mounted() {
     require('particles.js')
     // eslint-disable-next-line no-undef
     particlesJS('particles', particlesJson)
+    //获取图片请求
+    const result = this.$store.dispatch("hello/getImage")
+    result.then((blob) => {
+        this.imgUrl = window.URL.createObjectURL(blob)
+    }).catch(
+      (error) => {
+        console.log(error)
+      }
+    )
   }
 }
 </script>

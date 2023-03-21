@@ -16,8 +16,7 @@ import CommonHeader from "../components/CommonHeader.vue"
 export default {
     name: "HomeView",
     mounted() {
-        //获取用户信息
-        this.$store.dispatch('user/getUserInfo');
+        
     },
     components: {
         CommonAside,

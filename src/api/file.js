@@ -1,6 +1,15 @@
 import requests from "./request";
 import axios from 'axios'
 import {getToken} from '@/utils/token.js'
+//请求获取文件
+export const reqGetImage = (p) => requests({
+    url:'/index/getImage',
+    method:'get',
+    responseType:"blob"
+})
+
+
+/*
 //上传文件 post 参数文件对象
 export const reqUpload = (p) => axios({
     url:'http://192.168.8.126:8082/uploads', 
@@ -62,3 +71,4 @@ export const  reqAbsDeleteFile = (p) => requests({
         fileId:p
     }
 })
+*/

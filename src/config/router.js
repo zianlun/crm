@@ -4,6 +4,7 @@ import ComeView from '@/views/ComeView'
 import HomeView from '@/views/HomeView'
 import MainView from '@/views/MainView'
 import IndexView from '@/views/IndexView'
+import {getAccessToken} from '@/utils/token'
 Vue.use(VueRouter)
 const routes = [
     {
@@ -33,3 +34,14 @@ const router = new VueRouter({
     routes
 })
 export default router;
+router.beforeEach((to, from, next) => {
+    if(!getAccessToken()){
+        if(to.path == '/home' || to.path == '/home/main'){
+            next(false)
+        }
+        else
+            next()
+    }
+    else
+        next()
+})
