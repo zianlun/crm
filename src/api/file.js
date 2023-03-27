@@ -9,6 +9,14 @@ export const reqGetImage = (p) => requests({
 })
 
 
+//请求下载活动excel文件
+export const reqDownLoadActivity = () => {
+    return requests({
+      url:'activity/download',
+      method:'get',
+      responseType:'blob'
+    })
+}
 /*
 //上传文件 post 参数文件对象
 export const reqUpload = (p) => axios({

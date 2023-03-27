@@ -4,6 +4,7 @@ import { Promise } from 'core-js';
 export default{
     namespaced:true,
     state:{
+        
     },
     actions:{
         async getImage(context){

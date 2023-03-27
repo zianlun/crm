@@ -74,13 +74,7 @@ export default {
                     icon: "",
                     url: "/home",
                 },
-                {
-                    path: "/message",
-                    name: "message",
-                    label: "消息",
-                    icon: "",
-                    url: "MallManage/MallManage",
-                },
+            
             ],
             //登录弹窗设置
             dialogFormVisible: false,

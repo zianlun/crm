@@ -4,6 +4,8 @@ import ComeView from '@/views/ComeView'
 import HomeView from '@/views/HomeView'
 import MainView from '@/views/MainView'
 import IndexView from '@/views/IndexView'
+import WorkView from '@/views/WorkView'
+import MarketView from '@/views/MarketView'
 import {getAccessToken} from '@/utils/token'
 Vue.use(VueRouter)
 const routes = [
@@ -16,17 +18,26 @@ const routes = [
                 path:'index', 
                 component:IndexView,
             },
+            
         ]
     },
     {
         path:'/home',
         component:HomeView,
-        redirect:'/home/main',
+        redirect:'/home/work',
         children:[
             {
                 path:'main', 
                 component:MainView,
             },
+            {
+                path:'work',
+                component:WorkView,
+            },
+            {
+                path:'market',
+                component:MarketView
+            }
         ]
     }
 ]

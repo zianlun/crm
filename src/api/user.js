@@ -23,6 +23,37 @@ export const reqUserInfo = () =>{
         url:'user/getInfo',
     })
 }
+
+export const reqAllUsers = () => {
+    return requests({
+        method:'get',
+        url:'activity/allUsers'
+    })
+} 
+
+export const reqCreateActivity = (p)  => {
+    return requests({
+        method:'post',
+        url:'activity/createActivity',
+        data:p
+    })
+}
+
+export const reqAllActivity = (p) => {
+    return requests({
+        method:'get',
+        url:'activity/allActivity',
+        params:p
+    })
+}
+
+export const reqDeleteActivity = (p) => {
+    return requests({
+        method:'DELETE',
+        url:'activity/deleteActivity',
+        data:p
+    })
+}
 /*
 //注册请求 get 参数name, pwd
 export const reqRegister = (p) => {

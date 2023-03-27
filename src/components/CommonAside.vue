@@ -16,16 +16,23 @@ export default {
             menuData: [
                 {
                     label: '首页',
+                    name: 'share',
+                    path: '/home/work',
+                    icon: 's-home',
+                    url: ''
+                },
+                {
+                    label: '文件',
                     name: 'main',
                     path: '/home/main',
                     icon: 'cloudy',
                     url: ''
                 },
                 {
-                    label: '分享',
-                    name: 'share',
-                    path: '/home/share',
-                    icon: 'position',
+                    label: '市场活动',
+                    name: 'market',
+                    path: '/home/market',
+                    icon: 's-marketing',
                     url: ''
                 },
                 {
@@ -67,7 +74,7 @@ export default {
   
 <style lang="less" scoped>
 .el-menu {
-    width: 120px;
+    width: 140px;
 }
 </style>
   

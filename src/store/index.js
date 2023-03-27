@@ -7,10 +7,12 @@ Vue.use(Vuex)
 //引入用户模块
 import hello from './module/hello'
 import user from './module/user'
+import market from './module/market'
 //创建并暴露store
 export default new Vuex.Store({
     modules:{
         hello,
-        user
+        user,
+        market
     }
 })
